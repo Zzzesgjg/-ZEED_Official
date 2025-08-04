@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>@ZEED | Official</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
   <style>
     * {
       margin: 0;
@@ -28,6 +29,17 @@
       z-index: -1;
       filter: brightness(0.3);
       transition: filter 0.5s;
+    }
+
+    #particles-js {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      display: none;
+      background: linear-gradient(to bottom, #1a2a6c, #b21f1f, #fdbb2d);
     }
 
     .content {
@@ -213,6 +225,18 @@
         padding: 10px 20px;
         min-width: 120px;
       }
+      
+      #bg-video {
+        display: none;
+      }
+      
+      #particles-js {
+        display: block;
+      }
+      
+      .video-controls {
+        display: none;
+      }
     }
   </style>
 </head>
@@ -221,6 +245,8 @@
     <source src="V.mp4" type="video/mp4" />
     Your browser does not support HTML5 video.
   </video>
+  
+  <div id="particles-js"></div>
 
   <div class="video-controls">
     <button class="video-btn" id="brightnessBtn" title="Adjust Brightness"><i class="fas fa-sun"></i></button>
@@ -241,12 +267,11 @@
     <div id="aboutText">
       Hello, I'm "Zeed" I have been living with diabetes since I was 6 years old. 
       I'm very passionate about programming and technology. Follow me on social media platforms to learn more!💕
-
     </div>
 
     <button id="muteBtn"><i class="fas fa-volume-mute"></i>Mute</button>
 
-    <footer>v.0.2 Made with <i class="fas fa-heart"></i> by ZEED © <span id="year"></span></footer>
+    <footer>v.0.3 Made with <i class="fas fa-heart"></i> by ZEED © <span id="year"></span></footer>
   </div>
 
   <script>
@@ -311,7 +336,115 @@
       content.style.transform = `translateY(calc(-50% + ${scrollPosition * 0.2}px))`;
       content.style.opacity = 1 - (scrollPosition / 200);
     });
+    
+    // Initialize particles.js for mobile devices
+    if (window.innerWidth <= 600) {
+      particlesJS("particles-js", {
+        "particles": {
+          "number": {
+            "value": 100,
+            "density": {
+              "enable": true,
+              "value_area": 800
+            }
+          },
+          "color": {
+            "value": "#ffffff"
+          },
+          "shape": {
+            "type": "circle",
+            "stroke": {
+              "width": 0,
+              "color": "#000000"
+            },
+            "polygon": {
+              "nb_sides": 5
+            }
+          },
+          "opacity": {
+            "value": 0.5,
+            "random": true,
+            "anim": {
+              "enable": true,
+              "speed": 1,
+              "opacity_min": 0.1,
+              "sync": false
+            }
+          },
+          "size": {
+            "value": 3,
+            "random": true,
+            "anim": {
+              "enable": true,
+              "speed": 2,
+              "size_min": 0.1,
+              "sync": false
+            }
+          },
+          "line_linked": {
+            "enable": true,
+            "distance": 150,
+            "color": "#ffffff",
+            "opacity": 0.4,
+            "width": 1
+          },
+          "move": {
+            "enable": true,
+            "speed": 1,
+            "direction": "bottom",
+            "random": true,
+            "straight": false,
+            "out_mode": "out",
+            "bounce": false,
+            "attract": {
+              "enable": true,
+              "rotateX": 600,
+              "rotateY": 1200
+            }
+          }
+        },
+        "interactivity": {
+          "detect_on": "canvas",
+          "events": {
+            "onhover": {
+              "enable": true,
+              "mode": "grab"
+            },
+            "onclick": {
+              "enable": true,
+              "mode": "push"
+            },
+            "resize": true
+          },
+          "modes": {
+            "grab": {
+              "distance": 140,
+              "line_linked": {
+                "opacity": 1
+              }
+            },
+            "bubble": {
+              "distance": 400,
+              "size": 40,
+              "duration": 2,
+              "opacity": 8,
+              "speed": 3
+            },
+            "repulse": {
+              "distance": 200,
+              "duration": 0.4
+            },
+            "push": {
+              "particles_nb": 4
+            },
+            "remove": {
+              "particles_nb": 2
+            }
+          }
+        },
+        "retina_detect": true
+      });
+    }
   </script>
 </body>
 </html>
-
