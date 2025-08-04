@@ -152,6 +152,7 @@
       font-size: 14px;
       opacity: 0.7;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
     }
@@ -159,6 +160,14 @@
       color: red;
       margin: 0 5px;
       animation: heartbeat 1.5s infinite;
+    }
+
+    .view-counter {
+      margin-top: 10px;
+      background: rgba(255,255,255,0.1);
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-size: 0.9rem;
     }
 
     @keyframes fadeIn {
@@ -241,7 +250,7 @@
   </style>
 </head>
 <body>
-  <video autoplay muted id="bg-video">
+  <video autoplay muted loop id="bg-video">
     <source src="V.mp4" type="video/mp4" />
     Your browser does not support HTML5 video.
   </video>
@@ -251,6 +260,7 @@
   <div class="video-controls">
     <button class="video-btn" id="brightnessBtn" title="Adjust Brightness"><i class="fas fa-sun"></i></button>
     <button class="video-btn" id="playPauseBtn" title="Pause"><i class="fas fa-pause"></i></button>
+    <button class="video-btn" id="nextVideoBtn" title="Next Video"><i class="fas fa-random"></i></button>
   </div>
 
   <div class="content">
@@ -271,60 +281,96 @@
 
     <button id="muteBtn"><i class="fas fa-volume-mute"></i>Mute</button>
 
-    <footer>v.0.3 Made with <i class="fas fa-heart"></i> by ZEED © <span id="year"></span></footer>
+    <footer>
+      <div>v.0.5 Made with <i class="fas fa-heart"></i> by ZEED © <span id="year"></span></div>
+      <div class="view-counter"><i class="fas fa-eye"></i> <span id="viewCount">0</span> Views</div>
+    </footer>
   </div>
 
   <script>
+    // Initialize variables
     document.getElementById("year").textContent = new Date().getFullYear();
-
     const video = document.getElementById("bg-video");
     const muteBtn = document.getElementById("muteBtn");
     const playPauseBtn = document.getElementById("playPauseBtn");
     const brightnessBtn = document.getElementById("brightnessBtn");
+    const nextVideoBtn = document.getElementById("nextVideoBtn");
+    const viewCountElement = document.getElementById("viewCount");
 
+    // Video sources array
     const sources = ["V.mp4", "C.mp4", "d.mp4", "t.mp4"];
     let currentIndex = 0;
+    let viewCount = localStorage.getItem('viewCount') || 0;
 
-    function playNextVideo() {
-      currentIndex = (currentIndex + 1) % sources.length;
-      video.src = sources[currentIndex];
-      video.load();
-      video.play();
+    // Initialize view count
+    function updateViewCount() {
+      viewCount++;
+      localStorage.setItem('viewCount', viewCount);
+      viewCountElement.textContent = viewCount;
+      
+      // Animate the counter
+      viewCountElement.style.transform = 'scale(1.2)';
+      setTimeout(() => {
+        viewCountElement.style.transform = 'scale(1)';
+      }, 300);
     }
 
-    video.addEventListener("ended", playNextVideo);
+    // Play random video function
+    function playRandomVideo() {
+      let newIndex;
+      do {
+        newIndex = Math.floor(Math.random() * sources.length);
+      } while (sources.length > 1 && newIndex === currentIndex);
+      
+      currentIndex = newIndex;
+      video.src = sources[currentIndex];
+      video.load();
+      video.play().catch(e => console.log("Autoplay prevented:", e));
+    }
 
-    document.body.addEventListener('click', function () {
-      video.muted = false;
-      muteBtn.innerHTML = '<i class="fas fa-volume-up"></i>Mute';
-    }, { once: true });
+    // Initial setup
+    function init() {
+      updateViewCount();
+      playRandomVideo();
+      
+      // Set up event listeners
+      video.addEventListener("ended", playRandomVideo);
+      
+      document.body.addEventListener('click', function () {
+        video.muted = false;
+        muteBtn.innerHTML = '<i class="fas fa-volume-up"></i>Mute';
+      }, { once: true });
 
-    muteBtn.addEventListener("click", () => {
-      video.muted = !video.muted;
-      muteBtn.innerHTML = video.muted
-        ? '<i class="fas fa-volume-mute"></i>Mute'
-        : '<i class="fas fa-volume-up"></i>Mute';
-    });
+      muteBtn.addEventListener("click", () => {
+        video.muted = !video.muted;
+        muteBtn.innerHTML = video.muted
+          ? '<i class="fas fa-volume-mute"></i>Mute'
+          : '<i class="fas fa-volume-up"></i>Mute';
+      });
 
-    playPauseBtn.addEventListener("click", () => {
-      if (video.paused) {
-        video.play();
-        playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
-        playPauseBtn.title = "Pause";
-      } else {
-        video.pause();
-        playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
-        playPauseBtn.title = "Play";
-      }
-    });
+      playPauseBtn.addEventListener("click", () => {
+        if (video.paused) {
+          video.play();
+          playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+          playPauseBtn.title = "Pause";
+        } else {
+          video.pause();
+          playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+          playPauseBtn.title = "Play";
+        }
+      });
 
-    let brightnessLevel = 0.3;
-    brightnessBtn.addEventListener("click", () => {
-      brightnessLevel = brightnessLevel === 0.3 ? 0.6 : brightnessLevel === 0.6 ? 0.9 : 0.3;
-      video.style.filter = `brightness(${brightnessLevel})`;
-      brightnessBtn.title = `Brightness: ${Math.round(brightnessLevel * 100)}%`;
-    });
+      nextVideoBtn.addEventListener("click", playRandomVideo);
 
+      let brightnessLevel = 0.3;
+      brightnessBtn.addEventListener("click", () => {
+        brightnessLevel = brightnessLevel === 0.3 ? 0.6 : brightnessLevel === 0.6 ? 0.9 : 0.3;
+        video.style.filter = `brightness(${brightnessLevel})`;
+        brightnessBtn.title = `Brightness: ${Math.round(brightnessLevel * 100)}%`;
+      });
+    }
+
+    // Other functions
     function toggleAboutText() {
       const about = document.getElementById("aboutText");
       about.style.display = about.style.display === "none" ? "block" : "none";
@@ -445,6 +491,9 @@
         "retina_detect": true
       });
     }
+
+    // Initialize the page
+    window.addEventListener('DOMContentLoaded', init);
   </script>
 </body>
 </html>
