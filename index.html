@@ -1,15 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>@ZEED | Official</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
   <style>
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body, html { height:100%; overflow:hidden; font-family:'Orbitron', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    body, html { height:100%; overflow:hidden; }
 
     #bg-video {
       position: fixed; top:0; left:0; min-width:100%; min-height:100%;
@@ -29,21 +28,126 @@
       animation: fadeIn 1.5s ease-in-out;
     }
 
-    .pfp {
-      width:150px; height:150px; border-radius:50%; object-fit:cover;
-      border:3px solid #ff004c; box-shadow:0 0 25px rgba(255,0,76,0.7);
-      margin-bottom:15px; transition:transform 0.3s, box-shadow 0.3s;
-    }
-    .pfp:hover {
-      transform:scale(1.08) rotate(-2deg);
-      box-shadow:0 0 40px rgba(255,0,100,0.9);
+    .avatar-container {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 15px;
     }
 
-    h1 {
-      font-size:2.7rem; margin-bottom:20px;
-      text-shadow:0 0 10px rgba(255,0,100,0.8), 0 0 20px rgba(255,0,200,0.6);
-      font-weight:bold;
-      letter-spacing: 1px;
+    .pfp {
+      width:150px; height:150px; border-radius:50%; object-fit:cover;
+      border:3px solid #ff004c; 
+      margin-bottom:15px; 
+      position: relative;
+      z-index: 2;
+      transition:transform 0.3s;
+    }
+    
+    .magic-frame {
+      position: absolute;
+      top: -10px;
+      left: -10px;
+      right: -10px;
+      bottom: -10px;
+      border-radius: 50%;
+      background: linear-gradient(45deg, #ff004c, #7000ff, #00ffcc, #ffcc00);
+      background-size: 400% 400%;
+      animation: gradientShift 4s ease infinite, rotate 8s linear infinite;
+      z-index: 1;
+      filter: blur(5px);
+      opacity: 0.8;
+    }
+    
+    .magic-frame::before {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      right: 2px;
+      bottom: 2px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 1;
+    }
+    
+    .magic-sparkle {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: #fff;
+      border-radius: 50%;
+      filter: blur(1px);
+      animation: sparkle 3s infinite;
+      z-index: 3;
+    }
+    
+    .magic-sparkle:nth-child(1) { top: 10px; left: 20px; animation-delay: 0s; }
+    .magic-sparkle:nth-child(2) { top: 40px; right: 15px; animation-delay: 0.5s; }
+    .magic-sparkle:nth-child(3) { bottom: 30px; left: 30px; animation-delay: 1s; }
+    .magic-sparkle:nth-child(4) { bottom: 15px; right: 25px; animation-delay: 1.5s; }
+    .magic-sparkle:nth-child(5) { top: 25px; left: 45px; animation-delay: 2s; }
+
+    .avatar-container:hover .pfp {
+      transform:scale(1.08) rotate(-2deg);
+    }
+    
+    .avatar-container:hover .magic-frame {
+      animation-duration: 2s, 4s;
+      filter: blur(8px);
+      opacity: 1;
+    }
+
+    
+    .logo-3d {
+      font-size: 4.5rem;
+      font-weight: 900;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      perspective: 1000px;
+      display: inline-block;
+      cursor: default;
+    }
+    
+    .logo-3d-text {
+      display: inline-block;
+      transform-style: preserve-3d;
+      animation: float3d 6s ease-in-out infinite;
+      text-shadow: 
+        0 1px 0 #ccc, 
+        0 2px 0 #271717,
+        0 3px 0 #bbb,
+        0 4px 0 #b9b9b9,
+        0 5px 0 #aaa,
+        0 6px 1px rgba(0,0,0,.1),
+        0 0 5px rgba(0,0,0,.1),
+        0 1px 3px rgba(0,0,0,.3),
+        0 3px 5px rgba(0,0,0,.2),
+        0 10px 10px rgba(0,0,0,.25),
+        0 0 20px rgba(255,0,100,0.8),
+        0 0 40px rgba(255,0,200,0.6);
+      background: linear-gradient(45deg, #ff004c, #7000ff, #00ffcc);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: float3d 6s ease-in-out infinite, gradientShift 4s ease infinite;
+    }
+    
+    .logo-3d-text::before {
+      content: attr(data-text);
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform: translateZ(-30px);
+      opacity: 0.5;
+      filter: blur(5px);
+      background: linear-gradient(45deg, #ff004c, #7000ff, #00ffcc);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      z-index: -1;
     }
 
     .links {
@@ -60,7 +164,7 @@
       box-shadow:0 0 10px rgba(255,0,120,0.3) inset;
     }
     .links a:hover {
-      background:linear-gradient(90deg,#ff004c,#7000ff);
+      background:linear-gradient(90deg,#9900ff,#7000ff);
       color:white; transform:translateY(-4px) scale(1.05);
       box-shadow:0 0 20px rgba(255,0,120,0.7);
     }
@@ -101,9 +205,50 @@
       0%{transform:scale(1);} 25%{transform:scale(1.1);}
       50%{transform:scale(1);} 75%{transform:scale(1.1);} 100%{transform:scale(1);}
     }
+    
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    
+    @keyframes rotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    @keyframes sparkle {
+      0%, 100% { opacity: 0; transform: scale(0.5); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+    
+    @keyframes float3d {
+      0%, 100% { 
+        transform: translateY(0) rotateX(0) rotateY(0); 
+      }
+      25% { 
+        transform: translateY(-10px) rotateX(5deg) rotateY(5deg); 
+      }
+      50% { 
+        transform: translateY(0) rotateX(0) rotateY(10deg); 
+      }
+      75% { 
+        transform: translateY(-5px) rotateX(-5deg) rotateY(5deg); 
+      }
+    }
 
     @media(max-width:600px){
       .pfp{width:120px;height:120px;}
+      .magic-frame {
+        top: -8px;
+        left: -8px;
+        right: -8px;
+        bottom: -8px;
+      }
+      .logo-3d {
+        font-size: 2.8rem;
+        letter-spacing: 2px;
+      }
       h1{font-size:2rem;}
       .links a{padding:10px 20px;min-width:120px;}
       #bg-video{display:none;}
@@ -115,15 +260,27 @@
 </head>
 <body>
   <video autoplay muted loop id="bg-video">
-    <source src="1.mp4" type="video/mp4"/>
+    <source src="6.mp4" type="video/mp4"/>
     Your browser does not support HTML5 video.
   </video>
 
   <div id="particles-js"></div>
 
   <div class="content">
-    <img src="WandaVision Scarlet Witch.jpg" alt="ZEED Profile Picture" class="pfp"/>
-    <h1>@ZEED</h1>
+    <div class="avatar-container">
+      <div class="magic-frame"></div>
+      <img src="WandaVision Scarlet Witch.jpg" alt="ZEED Profile Picture" class="pfp"/>
+      <div class="magic-sparkle"></div>
+      <div class="magic-sparkle"></div>
+      <div class="magic-sparkle"></div>
+      <div class="magic-sparkle"></div>
+      <div class="magic-sparkle"></div>
+    </div>
+    
+    
+    <div class="logo-3d">
+      <span class="logo-3d-text" data-text="@ZEED">@ZEED</span>
+    </div>
 
     <div class="links">
       <a href="https://www.tiktok.com/@jdbl" target="_blank"><i class="fab fa-tiktok"></i>TikTok</a>
@@ -133,9 +290,9 @@
     </div>
 
     <div id="aboutText">
-      Hello, I'm <b>"Zeed"</b>, I have been living with diabetes since I was 6 years old.
+     Hello, I'm <b>"Zeed"</b>, I have been living with diabetes since I was 6 years old.
        I'm very passionate about programming and technology.
-        Follow me on social media platforms to learn more!💕
+        Follow me on social media platforms to learn more!💕💫
     </div>
 
     <div class="controls">
@@ -144,7 +301,7 @@
     </div>
 
     <footer>
-      <div>v.0.6 Made with <i class="fas fa-heart"></i> by ZEED © <span id="year"></span></div>
+      <div>v.0.7 Made with <i class="fas fa-heart"></i> by ZEED © <span id="year"></span></div>
     </footer>
   </div>
 
@@ -153,17 +310,18 @@
     const video = document.getElementById("bg-video");
     const muteBtn = document.getElementById("muteBtn");
     const changeVideoBtn = document.getElementById("changeVideoBtn");
+    const logo3d = document.querySelector('.logo-3d-text');
     
     
     const videos = [
       "1.mp4",
       "2.mp4",
       "3.mp4",
-      "4.mp4",
+      "4.mp4", 
       "5.mp4",
       "6.mp4",
-      "7.mp4",
-
+      "7.mp4"
+      
     ];
     let currentVideoIndex = 0;
 
@@ -196,6 +354,15 @@
       const about=document.getElementById("aboutText");
       about.style.display=about.style.display==="none"?"block":"none";
     }
+
+   
+    logo3d.addEventListener('mouseover', function() {
+      this.style.animationDuration = '2s, 2s';
+    });
+    
+    logo3d.addEventListener('mouseout', function() {
+      this.style.animationDuration = '3s, 4s';
+    });
 
     if(window.innerWidth<=600){
       particlesJS("particles-js",{
