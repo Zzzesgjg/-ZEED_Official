@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -13,13 +13,13 @@
     #bg-video {
       position: fixed; top:0; left:0; min-width:100%; min-height:100%;
       object-fit:cover; z-index:-1;
-      filter:brightness(0.3) contrast(1.1);
+      filter:brightness(0.4) contrast(1.2);
       transition:filter 0.5s;
     }
 
     #particles-js {
       position:fixed; width:100%; height:100%; top:0; left:0; z-index:-1; display:none;
-      background: radial-gradient(circle at center, #2b002e, #0a000f);
+      background: radial-gradient(circle at center, #0a0a1a, #000000);
     }
 
     .content {
@@ -36,21 +36,22 @@
 
     .pfp {
       width:150px; height:150px; border-radius:50%; object-fit:cover;
-      border:3px solid #ff004c; 
+      border:3px solid #1a237e; 
       margin-bottom:15px; 
       position: relative;
       z-index: 2;
       transition:transform 0.3s;
+      filter: grayscale(0.3);
     }
     
-    .magic-frame {
+    .nightwing-frame {
       position: absolute;
       top: -10px;
       left: -10px;
       right: -10px;
       bottom: -10px;
       border-radius: 50%;
-      background: linear-gradient(45deg, #ff004c, #7000ff, #00ffcc, #ffcc00);
+      background: linear-gradient(45deg, #0d47a1, #1a237e, #4a148c, #7b1fa2);
       background-size: 400% 400%;
       animation: gradientShift 4s ease infinite, rotate 8s linear infinite;
       z-index: 1;
@@ -58,7 +59,7 @@
       opacity: 0.8;
     }
     
-    .magic-frame::before {
+    .nightwing-frame::before {
       content: '';
       position: absolute;
       top: 2px;
@@ -66,32 +67,33 @@
       right: 2px;
       bottom: 2px;
       border-radius: 50%;
-      background: rgba(0, 0, 0, 0.8);
+      background: rgba(10, 10, 20, 0.9);
       z-index: 1;
     }
     
-    .magic-sparkle {
+    .nightwing-sparkle {
       position: absolute;
       width: 8px;
       height: 8px;
-      background: #fff;
+      background: #4fc3f7;
       border-radius: 50%;
       filter: blur(1px);
       animation: sparkle 3s infinite;
       z-index: 3;
     }
     
-    .magic-sparkle:nth-child(1) { top: 10px; left: 20px; animation-delay: 0s; }
-    .magic-sparkle:nth-child(2) { top: 40px; right: 15px; animation-delay: 0.5s; }
-    .magic-sparkle:nth-child(3) { bottom: 30px; left: 30px; animation-delay: 1s; }
-    .magic-sparkle:nth-child(4) { bottom: 15px; right: 25px; animation-delay: 1.5s; }
-    .magic-sparkle:nth-child(5) { top: 25px; left: 45px; animation-delay: 2s; }
+    .nightwing-sparkle:nth-child(1) { top: 10px; left: 20px; animation-delay: 0s; }
+    .nightwing-sparkle:nth-child(2) { top: 40px; right: 15px; animation-delay: 0.5s; }
+    .nightwing-sparkle:nth-child(3) { bottom: 30px; left: 30px; animation-delay: 1s; }
+    .nightwing-sparkle:nth-child(4) { bottom: 15px; right: 25px; animation-delay: 1.5s; }
+    .nightwing-sparkle:nth-child(5) { top: 25px; left: 45px; animation-delay: 2s; }
 
     .avatar-container:hover .pfp {
       transform:scale(1.08) rotate(-2deg);
+      filter: grayscale(0);
     }
     
-    .avatar-container:hover .magic-frame {
+    .avatar-container:hover .nightwing-frame {
       animation-duration: 2s, 4s;
       filter: blur(8px);
       opacity: 1;
@@ -114,19 +116,19 @@
       transform-style: preserve-3d;
       animation: float3d 6s ease-in-out infinite;
       text-shadow: 
-        0 1px 0 #ccc, 
-        0 2px 0 #271717,
-        0 3px 0 #bbb,
-        0 4px 0 #b9b9b9,
-        0 5px 0 #aaa,
+        0 1px 0 #3d5afe, 
+        0 2px 0 #1a237e,
+        0 3px 0 #0d47a1,
+        0 4px 0 #283593,
+        0 5px 0 #1565c0,
         0 6px 1px rgba(0,0,0,.1),
-        0 0 5px rgba(0,0,0,.1),
-        0 1px 3px rgba(0,0,0,.3),
-        0 3px 5px rgba(0,0,0,.2),
+        0 0 5px rgba(21, 101, 192, 0.3),
+        0 1px 3px rgba(21, 101, 192, 0.3),
+        0 3px 5px rgba(21, 101, 192, 0.2),
         0 10px 10px rgba(0,0,0,.25),
-        0 0 20px rgba(255,0,100,0.8),
-        0 0 40px rgba(255,0,200,0.6);
-      background: linear-gradient(45deg, #ff004c, #7000ff, #00ffcc);
+        0 0 20px rgba(26, 35, 126, 0.8),
+        0 0 40px rgba(13, 71, 161, 0.6);
+      background: linear-gradient(45deg, #0d47a1, #4a148c, #1a237e);
       background-size: 200% 200%;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -142,7 +144,7 @@
       transform: translateZ(-30px);
       opacity: 0.5;
       filter: blur(5px);
-      background: linear-gradient(45deg, #ff004c, #7000ff, #00ffcc);
+      background: linear-gradient(45deg, #0d47a1, #4a148c, #1a237e);
       background-size: 200% 200%;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -157,24 +159,26 @@
     .links a {
       display:flex; align-items:center; justify-content:center;
       margin:10px; padding:12px 25px;
-      background:rgba(100,0,60,0.2); backdrop-filter:blur(5px);
-      border:1px solid rgba(255,0,120,0.4);
+      background:rgba(26, 35, 126, 0.2); backdrop-filter:blur(5px);
+      border:1px solid rgba(48, 63, 159, 0.4);
       border-radius:30px; color:white; text-decoration:none;
       transition:0.4s; font-weight:500; min-width:150px;
-      box-shadow:0 0 10px rgba(255,0,120,0.3) inset;
+      box-shadow:0 0 10px rgba(13, 71, 161, 0.3) inset;
     }
     .links a:hover {
-      background:linear-gradient(90deg,#9900ff,#7000ff);
+      background:linear-gradient(90deg, rgba(26, 35, 126, 0.4), rgba(74, 20, 140, 0.5));
       color:white; transform:translateY(-4px) scale(1.05);
-      box-shadow:0 0 20px rgba(255,0,120,0.7);
+      box-shadow:0 0 20px rgba(48, 63, 159, 0.7);
+      border:1px solid rgba(123, 31, 162, 0.6);
     }
     .links a i { margin-right:8px; font-size:1.2rem; }
 
     #aboutText {
       display:none; margin-top:20px; font-size:1.1rem;
       max-width:600px; margin-left:auto; margin-right:auto;
-      background:rgba(80,0,40,0.3); padding:15px; border-radius:15px;
-      backdrop-filter:blur(5px); box-shadow:0 0 15px rgba(255,0,120,0.5);
+      background:rgba(26, 35, 126, 0.3); padding:15px; border-radius:15px;
+      backdrop-filter:blur(5px); box-shadow:0 0 15px rgba(13, 71, 161, 0.5);
+      border: 1px solid rgba(48, 63, 159, 0.3);
     }
 
     .controls {
@@ -186,19 +190,23 @@
 
     .controls button {
       padding:10px 25px; border:none;
-      background:rgba(120,0,70,0.3); backdrop-filter:blur(5px);
+      background:rgba(26, 35, 126, 0.3); backdrop-filter:blur(5px);
       color:white; border-radius:20px; cursor:pointer; font-size:1rem;
       transition:0.3s; display:flex; align-items:center; justify-content:center;
+      border: 1px solid rgba(48, 63, 159, 0.3);
     }
-    .controls button:hover { background:rgba(180,0,90,0.4); }
+    .controls button:hover { 
+      background:rgba(48, 63, 159, 0.4); 
+      box-shadow:0 0 15px rgba(48, 63, 159, 0.5);
+    }
     .controls button i { margin-right:8px; }
 
     footer {
       margin-top:40px; font-size:14px; opacity:0.8;
       display:flex; flex-direction:column; align-items:center; justify-content:center;
-      text-shadow:0 0 10px rgba(255,0,120,0.8);
+      text-shadow:0 0 10px rgba(13, 71, 161, 0.8);
     }
-    footer i { color:#ff004c; margin:0 5px; animation:heartbeat 1.5s infinite; }
+    footer i { color:#1a237e; margin:0 5px; animation:heartbeat 1.5s infinite; }
 
     @keyframes fadeIn { from{opacity:0; transform:translateY(-40%);} to{opacity:1; transform:translateY(-50%);} }
     @keyframes heartbeat {
@@ -239,7 +247,7 @@
 
     @media(max-width:600px){
       .pfp{width:120px;height:120px;}
-      .magic-frame {
+      .nightwing-frame {
         top: -8px;
         left: -8px;
         right: -8px;
@@ -260,7 +268,7 @@
 </head>
 <body>
   <video autoplay muted loop id="bg-video">
-    <source src="6.mp4" type="video/mp4"/>
+    <source src="ssstik.io_@_nghtwng_1759432107308.mp4" type="video/mp4"/>
     Your browser does not support HTML5 video.
   </video>
 
@@ -268,13 +276,13 @@
 
   <div class="content">
     <div class="avatar-container">
-      <div class="magic-frame"></div>
-      <img src="WandaVision Scarlet Witch.jpg" alt="ZEED Profile Picture" class="pfp"/>
-      <div class="magic-sparkle"></div>
-      <div class="magic-sparkle"></div>
-      <div class="magic-sparkle"></div>
-      <div class="magic-sparkle"></div>
-      <div class="magic-sparkle"></div>
+      <div class="nightwing-frame"></div>
+      <img src="NIGHTWING.jpg" alt="ZEED Profile Picture" class="pfp"/>
+      <div class="nightwing-sparkle"></div>
+      <div class="nightwing-sparkle"></div>
+      <div class="nightwing-sparkle"></div>
+      <div class="nightwing-sparkle"></div>
+      <div class="nightwing-sparkle"></div>
     </div>
     
     
@@ -314,13 +322,9 @@
     
     
     const videos = [
-      "1.mp4",
-      "2.mp4",
-      "3.mp4",
-      "4.mp4", 
-      "5.mp4",
-      "6.mp4",
-      "7.mp4"
+      "ssstik.io_@_nghtwng_1759432107308.mp4",
+      "ssstik.io_@tt4ke_1759432089448.mp4",
+      "ssstik.io_@mwndamxmlf_1759432136710.mp4"
       
     ];
     let currentVideoIndex = 0;
@@ -367,11 +371,11 @@
     if(window.innerWidth<=600){
       particlesJS("particles-js",{
         "particles":{"number":{"value":80,"density":{"enable":true,"value_area":800}},
-        "color":{"value":"#ff004c"},
+        "color":{"value":"#1a237e"},
         "shape":{"type":"circle"},
         "opacity":{"value":0.6,"random":true},
         "size":{"value":3,"random":true},
-        "line_linked":{"enable":true,"distance":150,"color":"#ff004c","opacity":0.4,"width":1},
+        "line_linked":{"enable":true,"distance":150,"color":"#4a148c","opacity":0.4,"width":1},
         "move":{"enable":true,"speed":1,"direction":"none","random":true,"straight":false,"out_mode":"out"}}
       });
     }
