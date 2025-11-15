@@ -309,76 +309,125 @@
     </div>
 
     <footer>
-      <div>v.0.7 Made with <i class="fas fa-heart"></i> by ZEED © <span id="year"></span></div>
+      <div>v.0.8 Made with <i class="fas fa-heart"></i> by ZEED © <span id="year"></span></div>
     </footer>
   </div>
 
   <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
-    const video = document.getElementById("bg-video");
-    const muteBtn = document.getElementById("muteBtn");
-    const changeVideoBtn = document.getElementById("changeVideoBtn");
-    const logo3d = document.querySelector('.logo-3d-text');
-    
-    
-    const videos = [
-      "ssstik.io_@_nghtwng_1759432107308.mp4",
-      "ssstik.io_@tt4ke_1759432089448.mp4",
-      "ssstik.io_@mwndamxmlf_1759432136710.mp4"
-      
-    ];
-    let currentVideoIndex = 0;
+  document.getElementById("year").textContent = new Date().getFullYear();
+  const video = document.getElementById("bg-video");
+  const muteBtn = document.getElementById("muteBtn");
+  const changeVideoBtn = document.getElementById("changeVideoBtn");
+  const logo3d = document.querySelector('.logo-3d-text');
+  const about = document.getElementById("aboutText");
 
-    document.body.addEventListener('click',function(){
-      video.muted=false;
-      muteBtn.innerHTML='<i class="fas fa-volume-up"></i>Mute';
-    },{once:true});
+  const videos = [
+    "ssstik.io_@_nghtwng_1759432107308.mp4",
+    "ssstik.io_@tt4ke_1759432089448.mp4",
+    "ssstik.io_@mwndamxmlf_1759432136710.mp4"
+  ];
+  let currentVideoIndex = 0;
 
-    muteBtn.addEventListener("click",()=>{
-      video.muted=!video.muted;
-      muteBtn.innerHTML=video.muted
-        ?'<i class="fas fa-volume-mute"></i>Mute'
-        :'<i class="fas fa-volume-up"></i>Mute';
+  /* -------------------------------
+     🔵 1. كشف اللغة تلقائياً
+  --------------------------------*/
+
+  const userLang = navigator.language || navigator.userLanguage;
+
+  const aboutTexts = {
+    "ar": `مرحباً، أنا <b>"زيد"</b>، أعيش مع مرض السكري منذ أن كان عمري 6 سنوات.
+           أنا شغوف جداً بالبرمجة والتقنية.
+           تابعني في وسائل التواصل لمعرفة المزيد! 💕💫`,
+    "en": `Hello, I'm <b>"Zeed"</b>. I've been living with diabetes since I was 6 years old.
+           I'm very passionate about programming and technology.
+           Follow me on social media platforms to learn more!💕💫`
+  };
+
+  if (userLang.startsWith("ar")) {
+    about.innerHTML = aboutTexts["ar"];
+    document.body.dir = "rtl";
+  } else {
+    about.innerHTML = aboutTexts["en"];
+    document.body.dir = "ltr";
+  }
+
+
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+  if (isMobile) {
+    muteBtn.style.display = "none"; // إخفاء الزر نهائيًا
+    video.muted = true; // الجوال إجباري صامت
+  } else {
+    document.body.addEventListener(
+      "click",
+      function () {
+        video.muted = false;
+        muteBtn.innerHTML = '<i class="fas fa-volume-up"></i>Mute';
+      },
+      { once: true }
+    );
+
+    muteBtn.addEventListener("click", () => {
+      video.muted = !video.muted;
+      muteBtn.innerHTML = video.muted
+        ? '<i class="fas fa-volume-mute"></i>Mute'
+        : '<i class="fas fa-volume-up"></i>Mute';
     });
+  }
 
-    changeVideoBtn.addEventListener("click",()=>{
-      currentVideoIndex = (currentVideoIndex + 1) % videos.length;
-      video.src = videos[currentVideoIndex];
-      video.load();
-      video.play();
-      
-      
-      video.style.opacity = "0";
-      setTimeout(() => {
-        video.style.opacity = "1";
-      }, 500);
+
+  changeVideoBtn.addEventListener("click", () => {
+    currentVideoIndex = (currentVideoIndex + 1) % videos.length;
+    video.src = videos[currentVideoIndex];
+    video.load();
+    video.play();
+
+    video.style.opacity = "0";
+    setTimeout(() => {
+      video.style.opacity = "1";
+    }, 500);
+  });
+
+  function toggleAboutText() {
+    about.style.display = about.style.display === "none" ? "block" : "none";
+  }
+
+ 
+  logo3d.addEventListener('mouseover', function () {
+    this.style.animationDuration = '2s, 2s';
+  });
+
+  logo3d.addEventListener('mouseout', function () {
+    this.style.animationDuration = '3s, 4s';
+  });
+
+
+  if (window.innerWidth <= 600) {
+    particlesJS("particles-js", {
+      "particles": {
+        "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
+        "color": { "value": "#1a237e" },
+        "shape": { "type": "circle" },
+        "opacity": { "value": 0.6, "random": true },
+        "size": { "value": 3, "random": true },
+        "line_linked": {
+          "enable": true,
+          "distance": 150,
+          "color": "#4a148c",
+          "opacity": 0.4,
+          "width": 1
+        },
+        "move": {
+          "enable": true,
+          "speed": 1,
+          "direction": "none",
+          "random": true,
+          "straight": false,
+          "out_mode": "out"
+        }
+      }
     });
-
-    function toggleAboutText(){
-      const about=document.getElementById("aboutText");
-      about.style.display=about.style.display==="none"?"block":"none";
-    }
-
-   
-    logo3d.addEventListener('mouseover', function() {
-      this.style.animationDuration = '2s, 2s';
-    });
-    
-    logo3d.addEventListener('mouseout', function() {
-      this.style.animationDuration = '3s, 4s';
-    });
-
-    if(window.innerWidth<=600){
-      particlesJS("particles-js",{
-        "particles":{"number":{"value":80,"density":{"enable":true,"value_area":800}},
-        "color":{"value":"#1a237e"},
-        "shape":{"type":"circle"},
-        "opacity":{"value":0.6,"random":true},
-        "size":{"value":3,"random":true},
-        "line_linked":{"enable":true,"distance":150,"color":"#4a148c","opacity":0.4,"width":1},
-        "move":{"enable":true,"speed":1,"direction":"none","random":true,"straight":false,"out_mode":"out"}}
-      });
-    }
+  }
   </script>
 </body>
 </html>
